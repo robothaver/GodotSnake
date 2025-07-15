@@ -1,0 +1,95 @@
+[gd_scene load_steps=13 format=3 uid="uid://cyxrlos5qm1u1"]
+
+[ext_resource type="Script" uid="uid://cegwrh0oq24sh" path="res://Scripts/player.gd" id="1_v0iea"]
+[ext_resource type="Texture2D" uid="uid://dwoskrets4mug" path="res://Assets/SnakeSpriteSheet.png" id="2_cvnsp"]
+[ext_resource type="Script" uid="uid://bcgw7e4qrxd0h" path="res://Scripts/part.gd" id="3_fkybt"]
+[ext_resource type="Texture2D" uid="uid://bld5f6wjins6l" path="res://Assets/SnakeTail.png" id="4_fkybt"]
+[ext_resource type="PackedScene" uid="uid://b11mnsu8gbsbc" path="res://Scenes/body.tscn" id="4_x3wgy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6t5aa"]
+atlas = ExtResource("2_cvnsp")
+region = Rect2(0, 0, 46, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vgqql"]
+atlas = ExtResource("2_cvnsp")
+region = Rect2(46, 0, 46, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fkybt"]
+atlas = ExtResource("2_cvnsp")
+region = Rect2(92, 0, 46, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x3wgy"]
+atlas = ExtResource("2_cvnsp")
+region = Rect2(138, 0, 46, 46)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3smsa"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6t5aa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vgqql")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fkybt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x3wgy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fkybt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vgqql")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6t5aa")
+}],
+"loop": false,
+"name": &"eat",
+"speed": 20.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fkybt"]
+size = Vector2(23, 23)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x3wgy"]
+size = Vector2(5, 5)
+
+[node name="Player" type="Node2D" node_paths=PackedStringArray("head", "body", "tail")]
+script = ExtResource("1_v0iea")
+head = NodePath("Head")
+body = NodePath("Body")
+tail = NodePath("Tail")
+
+[node name="Head" type="AnimatedSprite2D" parent="."]
+position = Vector2(-23, -23)
+sprite_frames = SubResource("SpriteFrames_3smsa")
+animation = &"eat"
+frame = 6
+frame_progress = 1.0
+script = ExtResource("3_fkybt")
+
+[node name="RigidBody2D" type="Area2D" parent="Head"]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Head/RigidBody2D"]
+shape = SubResource("RectangleShape2D_fkybt")
+
+[node name="Body" parent="." instance=ExtResource("4_x3wgy")]
+position = Vector2(-69, -23)
+
+[node name="Tail" type="Sprite2D" parent="."]
+position = Vector2(-115, -23)
+texture = ExtResource("4_fkybt")
+script = ExtResource("3_fkybt")
+
+[node name="Area2D" type="Area2D" parent="Tail"]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tail/Area2D"]
+shape = SubResource("RectangleShape2D_x3wgy")
+
+[connection signal="area_shape_entered" from="Head/RigidBody2D" to="." method="_on_rigid_body_2d_area_shape_entered"]
