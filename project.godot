@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="GodotTest"
+config/name="GodotSnake"
 run/main_scene="uid://ihcni3f3j0cy"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
