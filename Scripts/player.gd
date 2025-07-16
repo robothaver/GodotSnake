@@ -6,8 +6,6 @@ extends Node2D
 @export var moveDistance: float = 0.01
 @export var turnDuration: float = 1
 @export var rotationSpeed: float = 1
-var time: int = 5;
-var parts: Array[Part] = []
 
 const UP = Vector2(0, -1)
 const DOWN = Vector2(0, 1)
@@ -16,6 +14,7 @@ const RIGHT = Vector2(1, 0)
 
 var direction: Vector2 = RIGHT
 var currentTurnDuration: float = 0
+var parts: Array[Part] = []
 
 func _enter_tree() -> void:
 	parts.append_array([tail, body, head])
