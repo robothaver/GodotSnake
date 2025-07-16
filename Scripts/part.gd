@@ -1,10 +1,10 @@
 class_name Part extends Node2D
 
-var targetPosition = global_position
-var startPosition
-var targetRotation = 0
+var targetPosition: Vector2 = global_position
+var startPosition: Vector2
+var targetRotation: int = 0
 
-func setTargetPosition(newPosition):
+func setTargetPosition(newPosition: Vector2):
 	startPosition = targetPosition
 	targetPosition = newPosition
 
@@ -16,7 +16,6 @@ func setAsBody(initialPosition: Vector2):
 	sprite.texture = texture
 	add_child(sprite)
 	
-	var area2d: Area2D = Area2D.new()
 	var new_area = Area2D.new()
 	new_area.collision_layer = 2
 	var new_collision = CollisionShape2D.new()
